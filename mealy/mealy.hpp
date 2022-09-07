@@ -95,13 +95,13 @@ V mealy<T, K, V>::transition(K input)
         _currentState = _initState;
         return _undefMapOut;
     }
-    int nextState = (mapResult->first)(input);
+    int nextState = (mapResult->second.first)(input);
     if (_states.find(nextState) == _states.cend()) {
         _currentState = _initState;
     } else {
         _currentState = nextState;
     }
-    return (mapResult->second)(input);
+    return (mapResult->second.second)(input);
 }
 
 template <typename T, typename K, typename V>
