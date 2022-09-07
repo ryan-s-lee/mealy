@@ -9,8 +9,8 @@ project(mealy)
 
 add_executable(
     test
-    main.cpp)
+    test/main.cpp)
 
 target_include_directories(
     test
-    PRIVATE .)
+    PRIVATE inc/)
