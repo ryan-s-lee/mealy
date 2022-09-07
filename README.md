@@ -2,10 +2,16 @@
 
 ## Summary
 General implementation of a mealy machine in C++. Allow for any type to be used as the state, input, and output. Tested for C++17.
+### Conceptualiztion
+All `mealy` objects have a set of states, and an initial state that cannot be removed (unless it the initial state is set to something else). At any given time a `mealy` has a current state. Each state can have up to ONE function, the "transition function," mapping from itself to any other state given an input. This transition function is paired with an "output function" that maps inputs to output values. 
 
 ## Use
-### Conceptualiztion
-All `mealy` objects have a set of states, and an initial state that cannot be removed (unless it the initial state is set to something else). At any given time a `mealy` has a current state. 
+### Type parameters
+`T`: the type to be used to represent states
+
+`K`: the type to be used for input values
+
+`V`: the type to be used for output values
 
 ### Functions
 `void addState(T state)`: Add a new state to the set of possible states. Adding an existing state should do nothing.
@@ -16,13 +22,13 @@ All `mealy` objects have a set of states, and an initial state that cannot be re
     std::function<V(K)> outMap)`: 
 Assigns two functions to `state`, which together represent `state`'s mapping to other states. The first should take an input parameter and outputs another state. This function does NOT need to guarantee that its return value is in the set of existing states (see `transition(K input)` for information on how `mealy` treats states not in its set). The second function determines the output value of any transitions. If the state does not exist, `setMapping` does not assign anything and returns false. Returns true if succesful. 
 
-`bool rmMapping(T state)`: Removes a state's mapping to other states. Note that this removes ALL mappings; if you want to remove just one, this involves replacing the mapping with a new function using `setMapping`. 
+`bool rmMapping(T state)`: Removes a state's mapping to other states. Note that this removes ALL transitions to any other states. If you want to remove just one, you must replace the current transition mapping function using `setMapping`. Returns true if the removal was succesful, or false if the state does not exist.
 
 `T initState()`: Returns the value of the initial state. 
 
 `bool initState(T state)`: Attempts to change the value of the initial state. If the state is not in the machine's set of states, the function does not change the state and returns false. Otherwise, performs the change and returns true.
 
-`V transition(K input)`: Change the current state of the machine to one determined from inputting `input` to its associated transition function. If the transition function outputs a non-existent state, or if no mapping exists for the current state, returns `undefMapOut()` and sets the state to the initial state. 
+`V transition(K input)`: Change the current state of the machine to one determined from inputting `input` to its associated transition function, returning the result of the output function for the given parameter if the state exists. If the transition function outputs a non-existent state, or if no mapping exists for the current state, returns `undefMapOut()` and sets the state to the initial state. NOTE: Even if the output function defines a "proper" output for a transition, if the state resulting from its paired transition function does not exist, the return value of `transition` will still be `undefMapOut()`.
 
 `V undefMapOut()`: Returns the value that would be returned by `transition` if the transition function gets an illegal next state, or if the current state does not have a defined mapping. 
 
