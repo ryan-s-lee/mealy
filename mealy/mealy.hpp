@@ -86,12 +86,15 @@ V mealy<T, K, V>::transition(K input)
 {
     auto mapResult = _stateToTransMap.find(_currentState);
     if (mapResult == _stateToTransMap.cend()) {
+        // no mapping
         _currentState = _initState;
         return _undefMapOut;
     }
     int nextState = (mapResult->second.first)(input);
     if (_states.find(nextState) == _states.cend()) {
+        // result of transition func is an undefined state
         _currentState = _initState;
+        return _undefMapOut;
     } else {
         _currentState = nextState;
     }
