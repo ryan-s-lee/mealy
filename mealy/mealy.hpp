@@ -1,6 +1,7 @@
 #ifndef RYOLOGY_MEALY_H
 #define RYOLOGY_MEALY_H
 
+#include <cstddef>
 #include <functional>
 #include <set>
 #include <unordered_map>
@@ -60,6 +61,7 @@ bool mealy<T, K, V>::rmState(T state)
         return false;
     }
     _states.erase(result);
+    _stateToTransMap.erase(state);
     return true;
 }
 
@@ -79,12 +81,7 @@ bool mealy<T, K, V>::setMapping(T state, std::function<T(K)> toMap,
 template <typename T, typename K, typename V>
 bool mealy<T, K, V>::rmMapping(T state)
 {
-    auto result = _stateToTransMap.find(state);
-    if (result == _stateToTransMap.cend()) {
-        return false;
-    }
-    _stateToTransMap.erase(result);
-    return true;
+    return _stateToTransMap.erase(state) != 0;
 }
 
 template <typename T, typename K, typename V>
@@ -111,7 +108,7 @@ bool mealy<T, K, V>::initState(T state)
     if (result == _states.end()) {
         return false;
     }
-    _initState = result;
+    _initState = *result;
     return true;
 }
 
