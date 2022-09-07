@@ -1,0 +1,7 @@
+[
+{
+  "directory": "C:/Users/ryans/Projects/mealy/build",
+  "command": "C:\\PROGRA~1\\mingw64\\bin\\CLANG_~1.EXE -IC:/Users/ryans/Projects/mealy/. -std=gnu++17 -o CMakeFiles\\test.dir\\main.cpp.obj -c C:\\Users\\ryans\\Projects\\mealy\\main.cpp",
+  "file": "C:\\Users\\ryans\\Projects\\mealy\\main.cpp"
+}
+]
