@@ -1,11 +1,8 @@
 #ifndef RYOLOGY_MEALY_H
 #define RYOLOGY_MEALY_H
 
-#include <cstddef>
 #include <functional>
 #include <set>
-#include <unordered_map>
-#include <utility>
 
 template <typename T, typename K, typename V> class mealy
 {
