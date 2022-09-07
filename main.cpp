@@ -13,7 +13,9 @@ int main(int argc, char *argv[])
     // }
     dfa.setMapping(
         0, [](std::string input) -> int { return 1; },
-        [](std::string input) { return "with input " + input + ", moved from 0 to 1"; });
+        [](std::string input) {
+            return "with input " + input + ", moved from 0 to 1";
+        });
 
     std::cout << dfa.transition("hello");
     return 0;
